@@ -1,0 +1,885 @@
+---
+title: "Assignment: Risky Choice and CPT"
+author: "5577448"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+# Report
+
+## Introduction
+
+This study compared three computational models of risky choice behavior based on their goodness of fit and parsimony. The models were fitted to empirical data from an experiment conducted by Rieskamp (2008), where 30 participants (18 females and 12 males, aged 20-35 years, M = 25, SD = 4) made 180 choices between pairs gambles including losses, gains, and mixed outcomes, with all participants exposed to the same set of gamble pairs. The gambles were labeled Gamble A and Gamble B (Rieskamp, 2008).
+
+The use of computational models in behavioral science research allows for testing theoretical assumptions and making predictions under new circumstances, as opposed to relying solely on verbal theorizing. However, there is often a variety of alternative models that could explain the same behavioral data. Therefore, evaluating and comparing models based on their goodness of fit and the principle of parsimony is crucial for selecting the most appropriate explanation for the observed behavior.
+
+In this study, a maximum likelihood approach was employed to fit three different versions of Cumulative Prospect Theory (CPT) to the empirical data. Additionally, standard simulation and parameter recovery procedures were conducted to assess the strengths and weaknesses of each model. This rigorous approach aimed to identify the most parsimonious and well-fitting model among the competing explanations for the observed risky choice behavior.
+
+The first model version of CPT (CPT1) includes three free parameters. Parameters $\alpha$ and $\lambda$ are part of the function defining the subjective value of a payoff. $\alpha$ specifies the curvature of the subjective value function for both gains and losses, with values between 0 and 1 representing a concave value function and values greater than 1 a convex value function. Values between 0 and 1 also represent the idea of diminishing marginal utility, while values greater than 1 would represent increasing marginal utility. On the other hand, the parameter $\lambda$ specifies the steepness of the value function for losses, also called loss aversion, with values greater than 1 representing that losses are weighted more heavily than corresponding gains. For this model there is no transformation of probabilities, which would be equivalent of keeping as fixed parameters equal to 1 those quantifying the shape of the probability weighting function for gains and losses, mainly $\gamma$ and $\delta$.
+
+The second model version of CPT (CPT2) includes an extra parameter to those of CPT1, the parameter $\beta$. In contrast to CPT1, where $\alpha$ quantified the curvature of the subjective value function for both gains and losses, in CPT2 a distinct parameter $\beta$ quantifies the curvature of the subjective value function for losses, while $\alpha$ does it only for gains. In this case, the degree of diminishing marginal utility could be different for gains and losses. For this model, there is also no transformation of probabilities.
+
+The third and final model version of CPT (CPT3) includes the same parameters as CPT2, but also a probability weighting function. Here the probability weighting function includes only the free parameter $\gamma$. The parameter $\gamma$ quantifies the shape of the probability weighting for both gains and losses, with values between 0 and 1 associated with overweighting of small probabilities and underweighting of large probabilities, and the opposite pattern for values above 1.
+
+The three models used are stochastic versions of CPT. That is, that for all of them there is an additional stochastic choice function defining the probability of Gamble A being selected over Gamble B. This function includes only the free parameter $\tau$, which determines the amount of randomness in the choice of an individual (Broomell & Bhatia, 2014). A value of $\tau$ equal to 0 implies totally random choices regardless of subjective value, while greater values imply choices that have greater correspondence to differences in subjective value between gambles (Broomell & Bhatia, 2014). Including this stochastic choice function responds to studies showing that people’s risky decision-making is stochastic, they might change their preferences when presented with the same conditions multiple times (Stott, 2006).
+
+
+## Procedure
+
+The first procedure consisted in fitting the three versions of CPT to each participants' choices using Maximum Likelihood Estimation (MLE). That is, we kept the data and each model fixed, and observe changes in likelihood values as the parameter values change. To guarantee that the best fitting parameters obtained corresponded to the global optimum and not the local optimum, the search for the best fitting parameters was done several times with different initial starting values and then the values of the best fitting iteration extracted. As suggested by Wilson and Collins (2019) we used more starting points for more complex models. In order to reflect main assumptions of CPT (Glöckner & Pachur, 2011), the parameter values were restricted in the following way: 0.001 < $\alpha \leq 1$; 0.001 < $\lambda\leq 10$; 0.001 < $\beta \leq 1$; 0.001 < $\gamma \leq 1$, and 0.001 < $\tau \leq 10$.
+
+After fitting the models to the individual data, we extracted a central tendency measure of the parameter estimates that will work as the best fitting parameters used for running simulations. A total of 10 simulated data sets were created for each model. Subsequently, we fitted the models to the generated data sets and check if it was possible to recover the best fitting parameters.
+
+Finally, to compare the three models we adjusted the maximized log likelihoods using The Akaike Information Criterion (AIC). AIC is a useful indicator of which model provides the best explanation of the data while penalizing models according to the number of free parameters they have. Furthermore, for nested models like CPT2 and CPT3 we also conducted a likelihood ratio test for model comparison.
+
+
+## Results
+
+The distributions of the best-fitting parameters for model CPT1 are displayed in Figure 1. The distributions show some outliers for all three parameters. Additionally, a large number of parameters are clustered around one of the bounds, particularly for the $\alpha$ parameter, where a considerable number are clustered around the upper bound. This clustering for the $\alpha$ parameter may indicate potential issues with the model (Wilson and Collins, 2019). The values obtained for parameter alpha reveal that participants seem to show a slow decreasing marginal utility, but many values correspond to those suggested by researchers. Values equal to 1 for $\alpha$ are typically associated with risk neutrality, being this the most common value found. Regarding parameter $\lambda$, some values are greater than 1, showing that some participants probably exhibit loss aversion, however, many others do not show such pattern. As for parameter $\tau$, values in the lower bound close to zero reveal that some choices may be influenced by factors different to the subjective value of the gambles.
+
+![](pl_par_cpt1.png)
+
+*Figure 1*. Distributions of best-fitting parameter estimates for the CPT1 model across participants. Panels show the distributions for the $\alpha$ parameter, the $\lambda$ parameter, and the $\tau$ parameter.
+
+The distributions for model CPT2, displayed in Figure 2, exhibit a similar pattern observed for CPT1. However, for the distribution of the $\beta$ parameter, the clustering around the upper bound is even more extreme. Once again, this clustering may suggest issues with the model and the assumptions on which it is based. The $\alpha$ and $\beta$ distributions tells us that participants seem to exhibit a slow diminishing marginal utility for both gains and losses, however, the values of parameter $\alpha$ reflect a slightly faster diminishing marginal utility. Many participants do not seem to weight losses more than gains, with many values of parameter $\lambda$ below 1. With respect to parameter $\tau$ we see just a few values close to zero, which means that the subjective value of gambles have a greater impact on choices.
+
+![](pl_par_cpt2.png)
+
+*Figure 2*. Distributions of best-fitting parameter estimates for the CPT2 model across participants. Panels show the distributions for the $\alpha$ parameter, the $\lambda$ parameter, the $\beta$ parameter, and the $\tau$ parameter.
+
+For model CPT3, the distribution of parameters is displayed in Figure 3. No major differences are observed compared to the distributions for the other models, with a similar pattern for the $\beta$ parameter. However, there is slightly less clustering for the $\alpha$ parameter, and clustering is now observed around the lower bound for the $\tau$ parameter and around the upper bound for the $\gamma$ parameter. We observe once again that there is slow diminishing marginal utility for both gains and losses, however we found more values for both $\alpha$ and $\beta$ that correspond to moderate levels of diminishing marginal utility. For this model we observe the least number of participants showing loss aversion as a direct effect of parameter $\lambda$ compared to the other two models. With respect to parameter $\tau$ we see a high number of values close to zero, reflecting a greater amount of "randomness" in participants' choices (Broomell & Bhatia, 2014). Lastly, for parameter $\gamma$ we observe that the majority of values correspond to those described by the literature representing overweighting of small probabilities and underweighting of large probabilities.
+
+![](pl_par_cpt3.png)
+
+*Figure 3*. Distributions of best-fitting parameter estimates for the CPT3 model across participants. Panels show the distributions for the $\alpha$ parameter, the $\lambda$ parameter, the $\beta$ parameter, the $\tau$ parameter, and the $\gamma$ parameter.
+
+To further evaluate the results of the model fitting, we ran pairwise correlations between parameters' values. For the three models, we found moderate negative correlations between parameters $\alpha$ and $\tau$, with *r* = -0.60, *r* = -0.51, and *r* = -0.54, for models CPT1, CPT2 and CPT3 respectively. This seems to indicate that when individuals have a fast diminishing marginal utility their choices tend to become less random or noisy, and vice versa. This might occur because it is less likely that other factors might have an influence strong enough to counter a really steep diminishing marginal utility. Only for people closer to risk neutrality, such other factors might continuously move their choices between patterns of risk aversion and risk seeking. Additionally, we also found moderate positive correlations between parameters $\alpha$ and $\beta$, with *r* = 0.66, and *r* = 0.55 for models CPT2 and CPT3 respectively. This means that individuals with a fast decrease in marginal utility for gains tend to show a fast decrease in marginal utility for losses, and vice versa.
+
+After having completed model fitting we took the median of the models' parameters and use them to generate 10 syntethic datasets for each of the models. We then fitted the three models to the generated datasets and checked parameter recovery.
+
+First, for the model CPT1, Figure 4 displays the distribution of the parameters obtained from the synthetic data and the values of the aggregated best fitting parameters. We obtained the following statistics for $\alpha$ (median = 0.93, IQR = 0.03), $\lambda$ (median = 1.04, IQR = 0.09), and $\tau$ (median = 0.13, IQR = 0.02). Second, for model CPT2, see Figure 5. We obtained the following statistics for $\alpha$ (median = 0.86, IQR = 0.06), $\lambda$ (median = 0.8, IQR = 0.31), $\beta$ (median = 1, IQR = 0.02), and $\tau$ (median = 0.16, IQR = 0.05). Lastly, for model CPT3, see Figure 6. We obtained the following statistics for $\alpha$ (median = 0.81, IQR = 0.06), $\lambda$ (median = 0.67, IQR = 0.26), $\beta$ (median = 1, IQR = 0.02), $\tau$ (median = 0.26, IQR = 0.09), and $\gamma$ (median = 0.74, IQR = 0.01).
+
+![](pl_recov_cpt1.png)
+
+*Figure 4*. Distribution of parameters from fitting the CPT1 model to the synthetic datasets. Square points show original parameter values.
+
+![](pl_recov_cpt2.png)
+
+*Figure 5*. Distribution of parameters from fitting the CPT2 model to the synthetic datasets. Square points show original parameter values.
+
+![](pl_recov_cpt3.png)
+
+*Figure 6*. Distribution of parameters from fitting the CPT3 model to the synthetic datasets. Square points show original parameter values.
+
+Regarding model comparison, the AICs showed that the best model would be CPT3 (AIC = 5724.25), followed by CPT1 (AIC = 5950.8), and lastly CPT2 (AIC = 5980.72). The likelihood ratio test provided further evidence that CPT3 provides a significantly better fit to the data than CPT2 ($\chi^{2}$ = 17.46, *p* = < .001).
+
+## Discussion and conclusions
+The aim of this study was to compare three computational models of risky choice behavior based on their goodness of fit and parsimony. In order to do this we estimated the parameters the three models using Maximum Likelihood Estimation. Some issues appeared after fitting the models to the experimental data. Mainly, that for some of the participants the estimated parameters were clustered at the boundaries established according to the literature. This might either reflect problems with the data and the design used to collect it, or with the assumptions of the models used to set the boundaries. This issue was particularly pronounced for parameter $\beta$ in both CPT2 and CPT3. In addition, for many cases parameter $\lambda$ did not capture the fundamental concept of loss aversion. Nilsson et al. (2011) explain that these two issues might be related to the ability of CPT to account for loss aversion not only through $\lambda$, but also by exhibiting a faster decrease in marginal utility for gains than for losses, that is, when $\alpha$ is smaller than $\beta$. Such pattern was observed in both CPT2 and CPT3. The parameter estimation may compensate for the underestimation of $\lambda$ by assigning lower values to $\alpha$ than to $\beta$ (Nilsson et al., 2011). The moderate correlation between $\alpha$ and $\beta$ observed in both CPT2 and CPT3 may also be problematic, because it may suggest that they are not independently identifiable from the data.
+
+The aforementioned issues are probably responsible for the limitations in recoverability for some of the parameters. Problems of parameter recoverability are noticeable for parameter $\lambda$ in all of the three models, but especially in models CPT2 and CPT3. Some problems also seem to happen in CPT3 for parameters $\alpha$ and $\tau$, but these are more subtle.
+
+The comparisons between models revealed that CPT3 seems to be the model that best explains the data. Even though it is the most complex model and may not seem parsimonious, it performs better than CPT1 and CPT2 when we compare using measures of goodness of fit that penalize models according to the number of free parameters they have.
+
+
+## References
+
+Broomell, S. B., & Bhatia, S. (2014). Parameter recovery for decision modeling using choice data. Decision, 1(4), 252–274. https://doi.org/10.1037/dec0000020 
+
+Glöckner, A., & Pachur, T. (2012). Cognitive models of risky choice: Parameter stability and predictive accuracy of Prospect Theory. Cognition, 123(1), 21–32. https://doi.org/10.1016/j.cognition.2011.12.002 
+
+Nilsson, H., Rieskamp, J., & Wagenmakers, E.-J. (2011). Hierarchical bayesian parameter estimation for cumulative prospect theory. Journal of Mathematical Psychology, 55(1), 84–93. https://doi.org/10.1016/j.jmp.2010.08.006 
+
+Rieskamp, J. (2008). The probabilistic nature of preferential choice. Journal of Experimental Psychology: Learning, Memory, and Cognition, 34(6), 1446–1465. https://doi.org/10.1037/a0013646 
+
+Stott, H. P. (2006). Cumulative prospect theory’s functional menagerie. Journal of Risk and Uncertainty, 32(2), 101–130. https://doi.org/10.1007/s11166-006-8289-6 
+
+Wilson, R. C., & Collins, A. (2019). Ten Simple Rules for the Computational Modeling of Behavioral Data. https://doi.org/10.31234/osf.io/46mbn 
+
+
+
+## Appendix
+```{r section 2, echo=TRUE, results='hide'}
+# Load packages and setup other features
+packages <- c("tidyverse", "knitr", "readxl", "ggpubr", "plot3D", "reshape2", "cowplot", "corrplot", "gridExtra")
+lapply(packages, library, character.only = TRUE)
+theme_set(theme_bw(base_size = 17))
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=50),tidy=TRUE)
+
+# Load the data from the excel sheets
+gam <- read_excel("DATA_Study2_Rieskamp_2008_.xls", sheet = 2)
+cho <- read_excel("DATA_Study2_Rieskamp_2008_.xls", sheet = 3)
+
+# Preprocess the data
+gam <- gam[, 1:9]
+cho <- cho[, 3:33]
+colnames(cho)[1] <- "choicepair"
+d1 <- merge(cho, gam, by = "choicepair")
+d1$choicepair <- as.factor(d1$choicepair)
+
+# Reshape the data
+participant_cols <- paste0("participant", 1:30)
+long_d1 <- d1 %>%
+  pivot_longer(cols = 2:31, names_to = "participant", values_to = "choice")
+long_d1$participant <- as.numeric(long_d1$participant)
+long_d1$participant <- as.factor(long_d1$participant)
+
+
+# Create a list to store the plots
+plots_list <- list()
+
+# Loop over each participant
+for(i in unique(long_d1$participant)) {
+  # Subset the data for the current participant
+  participant_data <- long_d1 %>% 
+    filter(participant == i)
+  
+  # Create a histogram for the current participant
+  p <- ggplot(participant_data, aes(x = choice)) +
+    geom_histogram(fill = "blue", color = "black", binwidth = 1) +
+    labs(title = paste("Participant", i), x = "Choice", y = "Frequency") +
+    theme_bw() +
+    theme(text = element_text(size = 12), axis.title.y = element_blank())
+  
+  # Add the plot to the list
+  plots_list[[i]] <- p
+}
+
+# Arrange the plots in a grid
+grid.arrange(grobs = plots_list, ncol = 8)
+
+
+#-------------------------------------------------------------
+
+# First model: CPT1
+
+# Define the subjective value function
+v_cpt1 <- function(x, alpha, lambda){
+   ifelse(x >= 0, x^alpha, -lambda * abs(x)^alpha)
+}
+
+# Define the CPT1 model of choice
+cpt1 <- function(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha, lambda, tau) {
+vA <- (A1_prob * v_cpt1(A1_payoff, alpha, lambda)) + (A2_prob * v_cpt1(A2_payoff, alpha, lambda))
+vB <- (B1_prob * v_cpt1(B1_payoff, alpha, lambda)) + (B2_prob * v_cpt1(B2_payoff, alpha, lambda))
+vDif <- vA - vB
+1/(1 + exp(-tau*(vDif)))
+}
+
+# Define the likelihood function
+ll_cpt1 <- function(pars, A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, choice) {
+alpha <- pars[1]
+lambda <- pars[2]
+tau <- pars[3]
+pA <- cpt1(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha, lambda, tau)
+probs <- ifelse(choice == 0, pA, 1 - pA)
+if (any(probs == 0)) return(1e6)
+return(-sum(log(probs)))
+}
+
+# Function for getting random starting values for parameters
+get_start_values <- function() {
+c(
+  alpha = runif(1, 0.001, 1),
+  lambda = runif(1, 0.001, 1),
+  tau = runif(1, 0.001, 1)
+  )
+}
+
+# Guarantee reproducible results
+set.seed(1)
+# Perform the fitting on the individual level
+multifits <- do.call(rbind, lapply(1:30, function(y) {
+  # Subsetting the dataset
+  dtsub <- subset(long_d1, participant == y)
+
+  # For each subset dtsub, we run the optimisation function 5 times to make sure that model fits are not affected by local optima
+  res <- replicate(n = 5, simplify = TRUE, {
+    resI <- with(dtsub,
+      nlminb(get_start_values(), ll_cpt1, A1_prob = A1_prob, A1_payoff = A1_payoff, A2_prob = A2_prob, A2_payoff = A2_payoff, B1_prob = B1_prob, B1_payoff = B1_payoff, B2_prob = B2_prob, B2_payoff = B2_payoff, choice = choice, lower = c(0.001, 0.001, 0.001), upper = c(1, 10, 10))
+    ) # Parameter's boundaries were set following some suggested by Nilsson et al. (2011).
+
+    # We are saving the results of each iteration
+    myres <- c(resI$par,
+      logLik = -resI$objective,
+      convergence = resI$convergence
+    )
+    return(myres)
+  })
+
+  res <- as.data.frame(t(res)) # Changing the format of the results to a data frame
+  res$participant <- y # Include a column for participant ID
+  res
+}))
+
+print(multifits)# We get some evidence that the result is not a local optimum because for all the 5 iterations per participant the results are essentially the same.
+
+# Extract the results of the best fitting iteration per participant
+multifits2 <- multifits %>%
+  group_by(participant) %>%
+  slice(which.max(logLik))
+
+
+# Plot distribution of parameters
+hist_alpha <- multifits2 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = alpha)) +
+  geom_histogram(fill = "blue", color = "black") +
+  labs(title = "Distribution of Alpha", x = "Alpha") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_lambda <- multifits2 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = lambda)) +
+  geom_histogram(fill = "red", color = "black") +
+  labs(title = "Distribution of Lambda", x = "Lambda") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_tau <- multifits2 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = tau)) +
+  geom_histogram(fill = "green", color = "black") +
+  labs(title = "Distribution of Tau", x = "Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+pl_par_cpt1 <- plot_grid(hist_alpha, hist_lambda, hist_tau)
+ggsave("pl_par_cpt1.png", width = 15, height = 15, units = "cm", dpi = 600)
+pl_par_cpt1 # There are some outliers for all the estimated parameters
+
+# Scatter plots of each pairing of parameters
+# Plot for alpha vs lambda
+alpha_lambda <- ggplot(multifits2, aes(x=alpha, y=lambda)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Lambda", x="Alpha", y="Lambda") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for alpha vs tau
+alpha_tau <- ggplot(multifits2, aes(x=alpha, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Tau", x="Alpha", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for lambda vs tau
+lambda_tau <- ggplot(multifits2, aes(x=lambda, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Lambda vs Tau", x="Lambda", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+sca_par_cpt1 <- plot_grid(alpha_lambda, alpha_tau, lambda_tau)
+sca_par_cpt1
+
+# Correlation matrix of CPT1 parameters
+cor1 <- multifits2[,c("alpha", "lambda", "tau")]
+# Compute correlation
+correlation_matrix <- cor(cor1)
+print(correlation_matrix)
+
+# Create a correlation matrix plot
+corrplot(correlation_matrix, method = "circle", type = "upper", 
+         mar = c(0,0,1,0))
+
+# Aggregation of parameter estimates to run simulations
+agg_m_alpha <- median(multifits2$alpha, na.rm = TRUE)
+agg_m_lambda <- median(multifits2$lambda, na.rm = TRUE)
+agg_m_tau <- median(multifits2$tau, na.rm = TRUE)
+cpt1_loglik <- median(multifits2$logLik, na.rm = TRUE)
+
+# Data simulation for CPT1
+# Use the logit function to generate probabilistic choice predictions
+long_d1$pA <- 
+  with(long_d1, cpt1(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha = agg_m_alpha, lambda = agg_m_lambda, tau = agg_m_tau))
+
+# Create a function that takes choice probabilities as input and assign discrete choice (A = 0 or B = 1)
+decision_generator <- function(probability){
+  r.prob <- runif(1, min = 0, max = 1)
+  choice <- ifelse(probability >= r.prob, 0, 1)
+return(choice)
+}
+
+# Parameter recovery
+set.seed(2)
+## Create 10 synthetic datasets
+synth_data <- replicate(10, {
+sim_choice <- sapply(long_d1$pA, decision_generator)
+long_d2 <- data.frame(long_d1, sim_choice)
+}, simplify = FALSE)
+
+## Fit CPT1 model to the synthetic datasets
+recov_res <- lapply(synth_data, function(dts){
+solt <- with(dts, nlminb(c(alpha = 0.3, lambda = 2, tau = 0.1), ll_cpt1, A1_prob = A1_prob, A1_payoff = A1_payoff, A2_prob = A2_prob, A2_payoff = A2_payoff, B1_prob = B1_prob, B1_payoff = B1_payoff, B2_prob = B2_prob, B2_payoff = B2_payoff, choice = sim_choice, lower = c(0.001, 0.001, 0.001), upper = c(1, 10, 10)))
+return(solt$par)
+})
+recov_res_2 <- as.data.frame(do.call(rbind, recov_res))
+recov_res_3 <- melt(recov_res_2,variable.name="Parameter",value.name = "Value")
+sol_long_d1 <- data.frame(Parameter=c("alpha", "lambda", "tau"),Value=c(agg_m_alpha, agg_m_lambda, agg_m_tau))
+
+# Calculate measures of central tendency and dispersion
+median(recov_res_2$alpha)
+median(recov_res_2$lambda)
+median(recov_res_2$tau)
+
+IQR(recov_res_2$alpha)
+IQR(recov_res_2$lambda)
+IQR(recov_res_2$tau)
+
+# Make a plot showing the distribution of recovered parameters and the original best fitting parameters
+pl_recov_cpt1 <- ggplot(data=recov_res_3, aes(x=Parameter,y=Value))+
+  geom_violin() +
+  geom_point(data=sol_long_d1, size=3, colour="red", shape=22, fill="blue")+
+  xlab("Parameter") +
+  ylab("Value") +
+  theme_classic2()
+pl_recov_cpt1
+ggsave("pl_recov_cpt1.png", width = 15, height = 15, units = "cm", dpi = 600)
+
+
+#----------------------------------------------------------------------
+
+# Define the CPT2 and likelihood functions
+v_cpt2 <- function(x, alpha, lambda, beta){
+   ifelse(x >= 0, x^alpha, -lambda * abs(x)^beta)
+}
+
+cpt2 <- function(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha, lambda, beta, tau) {
+vA <- (A1_prob * v_cpt2(A1_payoff, alpha, lambda, beta)) + (A2_prob * v_cpt2(A2_payoff, alpha, lambda, beta))
+vB <- (B1_prob * v_cpt2(B1_payoff, alpha, lambda, beta)) + (B2_prob * v_cpt2(B2_payoff, alpha, lambda, beta))
+vDif <- vA - vB
+1/(1 + exp(-tau*(vDif)))
+}
+
+# log-likelihood function for CPT2
+ll_cpt2 <- function(pars, A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, choice) {
+alpha <- pars[1]
+lambda <- pars[2]
+beta <- pars[3]
+tau <- pars[4]
+pA <- cpt2(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha, lambda, beta, tau)
+probs <- ifelse(choice == 0, pA, 1 - pA)
+if (any(probs == 0)) return(1e6)
+return(-sum(log(probs)))
+}
+
+# Function for getting random starting values for parameters
+get_start_values2 <- function() {
+c(
+  alpha = runif(1, 0.001, 1),
+  lambda = runif(1, 0.001, 1),
+  beta = runif(1, 0.001, 1),
+  tau = runif(1, 0.001, 1)
+  )
+}
+
+set.seed(4)
+
+# Perform the fitting on the individual level
+multifits3 <- do.call(rbind, lapply(1:30, function(y) {
+  # Subsetting the dataset
+  dtsub <- subset(long_d1, participant == y)
+
+  # For each subset dtsub, we run the optimisation function 5 times to make sure that model fits are not affected by local optima
+  res <- replicate(n = 10, simplify = TRUE, {
+    resI <- with(dtsub,
+      nlminb(get_start_values2(), ll_cpt2, A1_prob = A1_prob, A1_payoff = A1_payoff, A2_prob = A2_prob, A2_payoff = A2_payoff, B1_prob = B1_prob, B1_payoff = B1_payoff, B2_prob = B2_prob, B2_payoff = B2_payoff, choice = choice, lower = c(0.001, 0.001, 0.001, 0.001), upper = c(1, 10, 1, 10))
+    )
+
+    # We are saving the results of each iteration
+    myres <- c(resI$par,
+      logLik = -resI$objective,
+      convergence = resI$convergence
+    )
+    return(myres)
+  })
+
+  res <- as.data.frame(t(res))
+  res$participant <- y
+  res
+}))
+
+print(multifits3)# We get some evidence that the result is not a local optimum
+
+# Data frame that only contains identifiable parameter estimates
+multifits4 <- multifits3 %>%
+  group_by(participant) %>%
+  slice(which.max(logLik))
+
+# Plot distribution of parameters
+hist_alpha2 <- multifits4 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = alpha)) +
+  geom_histogram(fill = "blue", color = "black") +
+  labs(title = "Distribution of Alpha", x = "Alpha") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_lambda2 <- multifits4 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = lambda)) +
+  geom_histogram(fill = "red", color = "black") +
+  labs(title = "Distribution of Lambda", x = "Lambda") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_beta2 <- multifits4 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = beta)) +
+  geom_histogram(fill = "green", color = "black") +
+  labs(title = "Distribution of Beta", x = "Beta") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_tau2 <- multifits4 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = tau)) +
+  geom_histogram(fill = "purple", color = "black") +
+  labs(title = "Distribution of Tau", x = "Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+pl_par_cpt2 <- plot_grid(hist_alpha2, hist_lambda2, hist_beta2, hist_tau2)
+ggsave("pl_par_cpt2.png", width = 15, height = 15, units = "cm", dpi = 600)
+pl_par_cpt2
+
+# Scatter plots of each pairing of parameters
+# Plot for alpha vs lambda
+alpha2_lambda2 <- ggplot(multifits4, aes(x=alpha, y=lambda)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Lambda", x="Alpha", y="Lambda") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for alpha vs beta
+alpha2_beta2 <- ggplot(multifits4, aes(x=alpha, y=beta)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Beta", x="Alpha", y="Beta") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for alpha vs tau
+alpha2_tau2 <- ggplot(multifits4, aes(x=alpha, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Tau", x="Alpha", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for lambda vs beta
+beta2_lambda2 <- ggplot(multifits4, aes(x=lambda, y=beta)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Lambda vs Beta", x="Lambda", y="Beta") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for lambda vs tau
+tau2_lambda2 <- ggplot(multifits4, aes(x=lambda, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Lambda vs Tau", x="Lambda", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for beta vs tau
+beta2_tau2 <- ggplot(multifits4, aes(x=beta, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Beta vs Tau", x="Beta", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+sca_par_cpt2 <- plot_grid(alpha2_lambda2, alpha2_beta2, alpha2_tau2, beta2_lambda2, tau2_lambda2, beta2_tau2)
+sca_par_cpt2
+
+# Correlation matrix of CPT2 parameters
+cor2 <- multifits4[,c("alpha", "lambda", "beta", "tau")]
+# Compute correlation
+correlation_matrix2 <- cor(cor2)
+print(correlation_matrix2)
+# Create a correlation matrix plot
+corrplot(correlation_matrix2, method = "circle", type = "upper", 
+         mar = c(0,0,1,0))
+
+# Aggregate data to run simulations
+agg_m_alpha2 <- median(multifits4$alpha, na.rm = TRUE)
+agg_m_lambda2 <- median(multifits4$lambda, na.rm = TRUE)
+agg_m_beta2 <- median(multifits4$beta, na.rm = TRUE)
+agg_m_tau2 <- median(multifits4$tau, na.rm = TRUE)
+cpt2_loglik <- median(multifits4$logLik, na.rm = TRUE)
+
+# Data simulation for CPT2
+# use the logit function to generate probabilistic choice predictions
+long_d2 <- long_d1 %>%
+  select(-pA)
+
+long_d2$pA2 <- 
+  with(long_d2, cpt2(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha = agg_m_alpha2, lambda = agg_m_lambda2, beta = agg_m_beta2, tau = agg_m_tau2))
+
+# Parameter recovery
+set.seed(5)
+## Create 10 synthetic datasets
+synth_data2 <- replicate(10, {
+sim_choice <- sapply(long_d2$pA2, decision_generator)
+long_d2 <- data.frame(long_d2, sim_choice)
+}, simplify = FALSE)
+
+## Fit CPT2 model to the synthetic datasets
+recov_res2 <- lapply(synth_data2, function(dts){
+solt <- with(dts, nlminb(c(alpha = 0.3, lambda = 1, beta = 0.3, tau = 0.1), ll_cpt2, A1_prob = A1_prob, A1_payoff = A1_payoff, A2_prob = A2_prob, A2_payoff = A2_payoff, B1_prob = B1_prob, B1_payoff = B1_payoff, B2_prob = B2_prob, B2_payoff = B2_payoff, choice = sim_choice, lower = c(0.001, 0.001, 0.001, 0.001), upper = c(1, 10, 1, 10)))
+return(solt$par)
+})
+recov_res_2_2 <- as.data.frame(do.call(rbind, recov_res2))
+recov_res_3_2 <- melt(recov_res_2_2,variable.name="Parameter",value.name = "Value")
+sol_long_d2 <- data.frame(Parameter=c("alpha", "lambda", "beta", "tau"),Value=c(agg_m_alpha2, agg_m_lambda2, agg_m_beta2, agg_m_tau2))
+
+# Calculate measures of central tendency and dispersion
+median(recov_res_2_2$alpha)
+median(recov_res_2_2$beta)
+median(recov_res_2_2$lambda)
+median(recov_res_2_2$tau)
+
+IQR(recov_res_2_2$alpha)
+IQR(recov_res_2_2$beta)
+IQR(recov_res_2_2$lambda)
+IQR(recov_res_2_2$tau)
+
+# Make a plot showing the distribution of recovered parameters and the original best fitting parameters
+pl_recov_cpt2 <- ggplot(data=recov_res_3_2, aes(x=Parameter,y=Value))+
+  geom_violin() +
+  geom_point(data=sol_long_d2, size=3, colour="red", shape=22, fill="blue")+
+  xlab("Parameter") +
+  ylab("Value") +
+  theme_classic2()
+pl_recov_cpt2
+ggsave("pl_recov_cpt2.png", width = 15, height = 15, units = "cm", dpi = 600)
+
+#----------------------------------------------------------------------
+
+# Define the CPT3 and likelihood functions
+pw <- function(p, gamma){
+p^gamma/((p^gamma + (1-p)^gamma)^(1/gamma))
+}
+  
+cpt3 <- function(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha, lambda, beta, tau, gamma) {
+vA <- (pw(A1_prob, gamma) * v_cpt2(A1_payoff, alpha, lambda, beta)) + (pw(A2_prob, gamma) * v_cpt2(A2_payoff, alpha, lambda, beta))
+vB <- (pw(B1_prob, gamma) * v_cpt2(B1_payoff, alpha, lambda, beta)) + (pw(B2_prob, gamma) * v_cpt2(B2_payoff, alpha, lambda, beta))
+vDif <- vA - vB
+1/(1 + exp(-tau*(vDif)))
+}
+
+# log-likelihood function for CPT3
+ll_cpt3 <- function(pars, A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, choice) {
+alpha <- pars[1]
+lambda <- pars[2]
+beta <- pars[3]
+tau <- pars[4]
+gamma <- pars[5]
+pA <- cpt3(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha, lambda, beta, tau, gamma)
+probs <- ifelse(choice == 0, pA, 1 - pA)
+if (any(probs == 0)) return(1e6)
+return(-sum(log(probs)))
+}
+
+# Function for getting random starting values for parameters
+get_start_values3 <- function() {
+c(
+  alpha = runif(1, 0.001, 1),
+  lambda = runif(1, 0.001, 1),
+  beta = runif(1, 0.001, 1),
+  tau = runif(1, 0.001, 10),
+  gamma = runif(1, 0.001, 1)
+  )
+}
+
+set.seed(6)
+# Perform the fitting on the individual level
+multifits5 <- do.call(rbind, lapply(1:30, function(y) {
+  # Subsetting the dataset
+  dtsub <- subset(long_d1, participant == y)
+
+  # For each subset dtsub, we run the optimisation function 5 times to make sure that model fits are not affected by local optima
+  res <- replicate(n = 15, simplify = TRUE, {
+    resI <- with(dtsub,
+      nlminb(get_start_values3(), ll_cpt3, A1_prob = A1_prob, A1_payoff = A1_payoff, A2_prob = A2_prob, A2_payoff = A2_payoff, B1_prob = B1_prob, B1_payoff = B1_payoff, B2_prob = B2_prob, B2_payoff = B2_payoff, choice = choice, lower = c(0.001, 0.001, 0.001, 0.001, 0.001), upper = c(1, 10, 1, 10, 1))
+    )
+
+    # We are saving the results of each iteration
+    myres <- c(resI$par,
+      logLik = -resI$objective,
+      convergence = resI$convergence
+    )
+    return(myres)
+  })
+
+  res <- as.data.frame(t(res))
+  res$participant <- y
+  res
+}))
+
+print(multifits5) # We get some evidence that the result is not a local optimum
+
+# Group by participant and select the row with the maximum log likelihood
+multifits6 <- multifits5 %>%
+  group_by(participant) %>%
+  slice(which.max(logLik))
+
+# Plot distribution of parameters
+hist_alpha3 <- multifits6 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = alpha)) +
+  geom_histogram(fill = "blue", color = "black") +
+  labs(title = "Distribution of Alpha", x = "Alpha") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_lambda3 <- multifits6 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = lambda)) +
+  geom_histogram(fill = "red", color = "black") +
+  labs(title = "Distribution of Lambda", x = "Lambda") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_beta3 <- multifits6 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = beta)) +
+  geom_histogram(fill = "green", color = "black") +
+  labs(title = "Distribution of Beta", x = "Beta") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_tau3 <- multifits6 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = tau)) +
+  geom_histogram(fill = "purple", color = "black") +
+  labs(title = "Distribution of Tau", x = "Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+hist_gamma3 <- multifits6 %>% 
+  filter(convergence == 0) %>% 
+  ggplot(aes(x = gamma)) +
+  geom_histogram(fill = "orange", color = "black") +
+  labs(title = "Distribution of Gamma", x = "Gamma") +
+  theme_bw() +
+  theme(text = element_text(size = 12), axis.title.y = element_blank())
+
+pl_par_cpt3 <- plot_grid(hist_alpha3, hist_lambda3, hist_beta3, hist_tau3, hist_gamma3)
+ggsave("pl_par_cpt3.png", width = 15, height = 15, units = "cm", dpi = 600)
+pl_par_cpt3
+
+
+# Scatter plots of each pairing of parameters
+# Plot for alpha vs lambda
+alpha3_lambda3 <- ggplot(multifits6, aes(x=alpha, y=lambda)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Lambda", x="Alpha", y="Lambda") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for alpha vs beta
+alpha3_beta3 <- ggplot(multifits6, aes(x=alpha, y=beta)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Beta", x="Alpha", y="Beta") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for alpha vs tau
+alpha3_tau3 <- ggplot(multifits6, aes(x=alpha, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Tau", x="Alpha", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for lambda vs beta
+beta3_lambda3 <- ggplot(multifits6, aes(x=lambda, y=beta)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Lambda vs Beta", x="Lambda", y="Beta") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for lambda vs tau
+tau3_lambda3 <- ggplot(multifits6, aes(x=lambda, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Lambda vs Tau", x="Lambda", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for beta vs tau
+beta3_tau3 <- ggplot(multifits6, aes(x=beta, y=tau)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Beta vs Tau", x="Beta", y="Tau") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for alpha vs gamma
+alpha3_gamma3 <- ggplot(multifits6, aes(x=alpha, y=gamma)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Alpha vs Gamma", x="Alpha", y="Gamma") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for lambda vs gamma
+lambda3_gamma3 <- ggplot(multifits6, aes(x=lambda, y=gamma)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Lambda vs Gamma", x="Lambda", y="Gamma") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for beta vs gamma
+beta3_gamma3 <- ggplot(multifits6, aes(x=beta, y=gamma)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Beta vs Gamma", x="Beta", y="Gamma") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+# Plot for tau vs gamma
+tau3_gamma3 <- ggplot(multifits6, aes(x=tau, y=gamma)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title="Tau vs Gamma", x="Tau", y="Gamma") +
+  theme_bw() +
+  theme(text = element_text(size = 12))
+
+sca_par_cpt3 <- plot_grid(alpha3_lambda3, alpha3_beta3, alpha3_tau3, beta3_lambda3, tau3_lambda3, beta3_tau3, alpha3_gamma3, lambda3_gamma3, beta3_gamma3, tau3_gamma3)
+sca_par_cpt3
+
+# Correlation matrix of CPT3 parameters
+cor3 <- multifits6[,c("alpha", "lambda", "beta", "tau", "gamma")]
+# Compute correlation
+correlation_matrix3 <- cor(cor3)
+print(correlation_matrix3)
+# Create a correlation matrix plot
+corrplot(correlation_matrix3, method = "circle", type = "upper", 
+         mar = c(0,0,1,0))
+
+# Aggregate data to run simulations
+agg_m_alpha3 <- median(multifits6$alpha, na.rm = TRUE)
+agg_m_lambda3 <- median(multifits6$lambda, na.rm = TRUE)
+agg_m_beta3 <- median(multifits6$beta, na.rm = TRUE)
+agg_m_tau3 <- median(multifits6$tau, na.rm = TRUE)
+agg_m_gamma3 <- median(multifits6$gamma, na.rm = TRUE)
+cpt3_loglik <- median(multifits6$logLik, na.rm = TRUE)
+
+# Data simulation for CPT3
+# use the logit function to generate probabilistic choice predictions
+long_d3 <- long_d2 %>%
+  select(-pA2)
+
+long_d3$pA3 <- 
+  with(long_d3, cpt3(A1_prob, A1_payoff, A2_prob, A2_payoff, B1_prob, B1_payoff, B2_prob, B2_payoff, alpha = agg_m_alpha3, lambda = agg_m_lambda3, beta = agg_m_beta3, tau = agg_m_tau3, gamma = agg_m_gamma3))
+
+# Parameter recovery
+set.seed(7)
+## Create 10 synthetic datasets
+synth_data3 <- replicate(10, {
+sim_choice <- sapply(long_d3$pA3, decision_generator)
+long_d3 <- data.frame(long_d3, sim_choice)
+}, simplify = FALSE)
+
+## Fit CPT3 model to the synthetic datasets
+recov_res3 <- lapply(synth_data3, function(dts){
+solt <- with(dts, nlminb(c(alpha = 0.3, lambda = 1, beta = 0.3, tau = 0.1, gamma = 0.5), ll_cpt3, A1_prob = A1_prob, A1_payoff = A1_payoff, A2_prob = A2_prob, A2_payoff = A2_payoff, B1_prob = B1_prob, B1_payoff = B1_payoff, B2_prob = B2_prob, B2_payoff = B2_payoff, choice = sim_choice, lower = c(0.001, 0.001, 0.001, 0.001, 0.001), upper = c(1, 10, 1, 10, 1)))
+return(solt$par)
+})
+recov_res_2_3 <- as.data.frame(do.call(rbind, recov_res3))
+recov_res_3_3 <- melt(recov_res_2_3,variable.name="Parameter",value.name = "Value")
+sol_long_d3 <- data.frame(Parameter=c("alpha", "lambda", "beta", "tau", "gamma"),Value=c(agg_m_alpha3, agg_m_lambda3, agg_m_beta3, agg_m_tau3, agg_m_gamma3))
+
+# Calculate measures of central tendency and dispersion
+median(recov_res_2_3$alpha)
+median(recov_res_2_3$beta)
+median(recov_res_2_3$lambda)
+median(recov_res_2_3$tau)
+median(recov_res_2_3$gamma)
+
+IQR(recov_res_2_3$alpha)
+IQR(recov_res_2_3$beta)
+IQR(recov_res_2_3$lambda)
+IQR(recov_res_2_3$tau)
+IQR(recov_res_2_3$gamma)
+
+# Make a plot showing the distribution of recovered parameters and the original best fitting parameters
+pl_recov_cpt3 <- ggplot(data=recov_res_3_3, aes(x=Parameter,y=Value))+
+  geom_violin() +
+  geom_point(data=sol_long_d3, size=3, colour="red", shape=22, fill="blue")+
+  xlab("Parameter") +
+  ylab("Value") +
+  theme_classic2()
+pl_recov_cpt3
+ggsave("pl_recov_cpt3.png", width = 15, height = 15, units = "cm", dpi = 600)
+
+#----------------------------------------------------------------------
+
+# Model comparison
+# Comparing AICs
+
+ # AIC of CPT1
+# Log-likelihood
+L <- -sum(multifits2$logLik)
+# Number of parameters
+K <- 3
+# Number of participants
+N <- 30
+# Calculate AIC
+AIC1 <- 2*L + 2*N*K
+AIC1
+
+# AIC of CPT2
+# Log-likelihood
+L <- -sum(multifits4$logLik)
+# Number of parameters
+K <- 4
+# Number of participants
+N <- 30
+# Calculate AIC
+AIC2 <- 2*L + 2*N*K
+AIC2
+
+# AIC of CPT3
+# Log-likelihood
+L <- -sum(multifits6$logLik)
+# Number of parameters
+K <- 5
+# Number of participants
+N <- 30
+# Calculate AIC
+AIC3 <- 2*L + 2*N*K
+AIC3
+
+cpt1_vs_cpt2 <- AIC1 < AIC2
+print(cpt1_vs_cpt2) # CPT1 is the winning model compared to CPT2
+cpt1_vs_cpt3 <- AIC1 < AIC3
+print(cpt1_vs_cpt3) # CPT1 is the winning model compared to CPT3
+cpt2_vs_cpt3 <- AIC2 < AIC3
+print(cpt2_vs_cpt3) # CPT2 is the winning model compared to CPT3
+
+# CPT2 is a specific model of the more general model CPT3 where gamma = 1
+# The likelihood ratio test
+chi_stat <- -2*cpt2_loglik - (-2*cpt3_loglik)
+# Calculate the degrees of freedom
+df <- 5 - 4
+# Get the p-value
+p_value <- 1 - pchisq(abs(chi_stat), df)
+print(p_value) # CPT3 provides a significantly better fit to the data than CPT2.
+
+```
+
+
